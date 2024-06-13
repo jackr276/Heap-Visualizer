@@ -1,6 +1,11 @@
+/**
+ * Author: Jack Robbins
+ * Simple driver class for the heap visualization
+ */
 public class Main{
+
 	public static void main(String[] args){
-		
+		//Create and initialize the MinHeap	
 		MinHeap heap = new MinHeap(10);
 		
 		heap.insert(8)
@@ -18,6 +23,7 @@ public class Main{
 			.insert(15)
 			.insert(21)
 			.insert(-1);
+		//Hand off to printing method
 		heap.printAsBinaryTree();
 	}
 }

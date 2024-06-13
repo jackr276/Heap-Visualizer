@@ -1,54 +1,98 @@
+/**
+ * Author: Jack Robbins
+ * This class represents a minHeap as an array, and is mainly here to serve
+ * an associated print method
+ */
+
 import java.util.Arrays;
 
+
 public class MinHeap{
+	//Our heap is stored as an array
 	private int[] heap;
 	private int size;
 	private int capacity;
 
+	/**
+	 * Initialize with an initial capacity, and initial size is of course 0
+	 */
 	public MinHeap(int capacity){
 		this.capacity = capacity;
 		this.heap = new int[capacity];
 		this.size = 0;
 	}
 
+
+	/**
+	 * The parent index will always be half of the child index
+	 */
 	private int parent(int i){
 		return (i - 1) / 2;
 	}
 
+
+	/**
+	 * Likewise, the left child index is always twice the parent + 1
+	 */
 	private int leftChild(int i){
 		return 2 * i + 1;
 	}
 
+
+	/**
+	 * Likewise, the right child index is always twice the parent + 2
+	 */
 	private int rightChild(int i){
 		return 2 * i + 2;
 	}
 
+
+	/**
+	 * Basic helper swap method
+	 */
 	private void swap(int i, int j){
 		int temp = heap[i];
 		heap[i] = heap[j];
 		heap[j] = temp;
 	}
 
+
+	/**
+	 * Provides our auto-resize capability
+	 */
 	private void resize(){
+		//Always double the capacity on resize
 		capacity *= 2;
 		heap = Arrays.copyOf(heap, capacity);
 	}
 
+
+	/**
+	 * Insert method for our minheap
+	 */
 	public MinHeap insert(int item){
+		//Automatically call resize()
 		if(size >= capacity){
 			resize();
 		}
 
+		//Insert item into heap
 		heap[size] = item;
+		//Keep track of the insertedIndex
 		int insertedIndex = size;
+		//We added one more, so increase this
 		size++;
 
+		//So long as the index is more than 0, and we are less than the parent...
 		while(insertedIndex > 0 && heap[insertedIndex] < heap[parent(insertedIndex)]){
+			//Swap the two values
 			swap(insertedIndex, parent(insertedIndex));
 
+			//Update the value
 			insertedIndex = parent(insertedIndex);
 		}
 
+		//Convenience enhancement -- allow for chaining method calls
 		return this;
 	}
 
@@ -66,6 +110,7 @@ public class MinHeap{
 
 		//Current level we are on
 		int current_level = 0;
+		//An adjustment factor of sorts
 		int x = 1;	
 
 		//Set the "root" effectively
